@@ -24,6 +24,14 @@ export default class Player {
     p5.circle(this.position.x, this.position.y, this.size);
   }
 
+  getPosition() {
+    return this.position;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
   checkKeyboardInput(p5: p5) {
     // Check for W key or Up Arrow
     if (p5.keyIsDown(87) || p5.keyIsDown(p5.UP_ARROW))
