@@ -7,14 +7,15 @@ export class Enemy {
   speed: p5.Vector;
   size: p5.Vector;
   hits: number;
-  sprite: p5.Image;
+  sprite: p5.Image[];
+  imgIndex: number;
 
   constructor(
     p5: p5,
     numHits: number,
     speed: p5.Vector,
     size: p5.Vector,
-    sprite: p5.Image
+    sprite: p5.Image[]
   ) {
     this.size = size;
     this.position = p5.createVector(
@@ -23,7 +24,8 @@ export class Enemy {
     );
     this.speed = speed;
     this.hits = numHits;
-    this.sprite = this.cloneGif(sprite, 0);
+    this.sprite = sprite;
+    this.imgIndex = 0;
   }
 
   addHits(num: number) {
@@ -49,10 +51,12 @@ export class Enemy {
 
   update() {
     this.position.x -= this.speed.x;
+    this.imgIndex += 0.6;
   }
 
   display(p5: p5) {
-    p5.image(this.sprite, this.position.x, this.position.y, 200, 200);
+    let index = p5.floor(this.imgIndex) % this.sprite.length;
+    p5.image(this.sprite[index], this.position.x, this.position.y, 200, 200);
   }
 
   checkBulletCollision(bullet: PlayerBullet) {
@@ -85,26 +89,25 @@ export class Enemy {
     return false;
   }
 
-  cloneGif(gif: p5.Image, startingFrame?: number) {
-    let gifClone = gif.get();
-    // @ts-ignore
-    let gp = gif.gifProperties;
-    console.log(gp);
-    // @ts-ignore
-    gifClone.gifProperties = {
-      displayIndex: gp.displayIndex,
-      frames: gp.frames,
-      lastChangeTime: gp.lastChangeTime,
-      loopCount: gp.loopCount,
-      loopLimit: gp.loopLimit,
-      numFrames: gp.numFrames,
-      playing: gp.playing,
-      timeDisplayed: gp.timeDisplayed,
-    };
+  // cloneGif(gif: p5.Image, startingFrame?: number) {
+  //   let gifClone = gif.get();
+  //   // @ts-ignore
+  //   let gp = gif.gifProperties;
+  //   // @ts-ignore
+  //   gifClone.gifProperties = {
+  //     displayIndex: gp.displayIndex,
+  //     frames: gp.frames,
+  //     lastChangeTime: gp.lastChangeTime,
+  //     loopCount: gp.loopCount,
+  //     loopLimit: gp.loopLimit,
+  //     numFrames: gp.numFrames,
+  //     playing: gp.playing,
+  //     timeDisplayed: gp.timeDisplayed,
+  //   };
 
-    if (startingFrame) gifClone.setFrame(startingFrame);
-    return gifClone;
-  }
+  //   if (startingFrame) gifClone.setFrame(startingFrame);
+  //   return gifClone;
+  // }
 }
 
 // // Ring of bullets, 15 hits
@@ -121,10 +124,6 @@ export class Drifter extends Enemy {
     super(p5, numHits, p5.createVector(1, 0), p5.createVector(170, 50), sprite);
     this.bullets = bullets;
   }
-
-  // override update(): void {
-
-  // }
 }
 
 // // Boss, hp sponge

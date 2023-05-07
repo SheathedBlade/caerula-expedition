@@ -12,7 +12,7 @@ const sketch = (p5: p5) => {
   let enemies: Enemy[];
 
   // Enemy sprites
-  let drifter: p5.Image;
+  let drifter: p5.Image[] = [];
   // let reaper: p5.Image;
   // let swarmcaller: p5.Image;
   // let descendant: p5.Image;
@@ -20,7 +20,11 @@ const sketch = (p5: p5) => {
   // let crawler: p5.Image;
 
   p5.preload = () => {
-    drifter = p5.loadImage("/drifter.gif");
+    // Load drifter images
+    //drifter = p5.loadImage("drifter.gif");
+    for (let i = 1; i <= 31; i++) {
+      drifter.push(p5.loadImage("./drifter-anim/drifter" + i + ".png"));
+    }
   };
 
   p5.setup = () => {
