@@ -20,7 +20,7 @@ const sketch = (p5: p5) => {
   // let crawler: p5.Image;
 
   p5.preload = () => {
-    drifter = p5.loadImage("/src/assets/drifter.gif");
+    drifter = p5.loadImage("../public/drifter.gif");
   };
 
   p5.setup = () => {
