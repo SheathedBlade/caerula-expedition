@@ -49,13 +49,9 @@ export class Enemy {
 
   update() {
     this.position.x -= this.speed.x;
-    console.log(this.sprite);
   }
 
   display(p5: p5) {
-    // p5.fill(p5.color(20, 240, 60));
-    // p5.noStroke();
-    // p5.ellipse(this.position.x, this.position.y, this.size.x, this.size.y);
     p5.image(this.sprite, this.position.x, this.position.y, 200, 200);
   }
 
@@ -89,10 +85,11 @@ export class Enemy {
     return false;
   }
 
-  cloneGif(gif: p5.Image, startingFrame: number) {
+  cloneGif(gif: p5.Image, startingFrame?: number) {
     let gifClone = gif.get();
     // @ts-ignore
-    const gp = gif.gifProperties;
+    let gp = gif.gifProperties;
+    console.log(gp);
     // @ts-ignore
     gifClone.gifProperties = {
       displayIndex: gp.displayIndex,
@@ -105,7 +102,7 @@ export class Enemy {
       timeDisplayed: gp.timeDisplayed,
     };
 
-    gifClone.setFrame(startingFrame);
+    if (startingFrame) gifClone.setFrame(startingFrame);
     return gifClone;
   }
 }

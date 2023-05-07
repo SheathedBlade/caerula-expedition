@@ -13,6 +13,11 @@ const sketch = (p5: p5) => {
 
   // Enemy sprites
   let drifter: p5.Image;
+  // let reaper: p5.Image;
+  // let swarmcaller: p5.Image;
+  // let descendant: p5.Image;
+  // let stella: p5.Image;
+  // let crawler: p5.Image;
 
   p5.preload = () => {
     drifter = p5.loadImage("/src/assets/drifter.gif");
