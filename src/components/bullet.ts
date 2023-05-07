@@ -11,7 +11,7 @@ export class Bullet {
     this.size = size;
     this.speed = speed;
     this.position = p5.createVector(
-      entity.getPosition().x + entity.getSize() / 2,
+      entity.getPosition().x + entity.getSize().x / 2,
       entity.getPosition().y
     );
   }
@@ -21,7 +21,6 @@ export class Bullet {
   display(p5: p5) {
     p5.fill(p5.color(255));
     p5.noStroke();
-    p5.ellipseMode(p5.CENTER);
     p5.ellipse(this.position.x, this.position.y, this.size);
   }
   getSize(): number {
@@ -57,7 +56,7 @@ export class EnemyBullet extends Bullet {
   checkPlayerCollision(player: Player) {
     if (
       this.position.x - this.size / 2 ==
-      player.getPosition().x + player.getSize() / 2
+      player.getPosition().x + player.getSize().x / 2
     )
       return true;
     return false;

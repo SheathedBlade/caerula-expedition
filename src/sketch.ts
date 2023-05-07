@@ -11,7 +11,12 @@ const sketch = (p5: p5) => {
   let timer: Timer;
   let enemies: Enemy[];
 
-  p5.preload = () => {};
+  // Enemy sprites
+  let drifter: p5.Image;
+
+  p5.preload = () => {
+    drifter = p5.loadImage("/src/assets/drifter.gif");
+  };
 
   p5.setup = () => {
     const canvas = p5.createCanvas(
@@ -21,6 +26,7 @@ const sketch = (p5: p5) => {
     p5.noCursor();
     canvas.parent("#app");
     p5.ellipseMode(p5.CENTER);
+    p5.imageMode(p5.CENTER);
     score = 0;
     timer = new Timer(100);
 
@@ -70,7 +76,9 @@ const sketch = (p5: p5) => {
       }
     });
 
-    if (p5.random(0, 100) < 1) enemies.push(new Drifter(p5, 5, []));
+    if (p5.random(0, 100) < 1) {
+      enemies.push(new Drifter(p5, 5, [], drifter));
+    }
 
     // Count up timer
     if (

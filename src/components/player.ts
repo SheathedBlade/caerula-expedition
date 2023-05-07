@@ -3,14 +3,14 @@ import p5 from "p5";
 export default class Player {
   position: any;
   speed: number;
-  size: number;
+  size: p5.Vector;
   lives: number;
   isInvincible: boolean;
 
   constructor(p5: p5, lives: number) {
     this.position = p5.createVector(p5.width / 8, p5.height / 2);
     this.speed = 5;
-    this.size = 50;
+    this.size = p5.createVector(50, 50);
     this.lives = lives;
     this.isInvincible = false;
   }
@@ -23,7 +23,7 @@ export default class Player {
   display(p5: p5) {
     p5.fill(p5.color(125, 26, 29));
     p5.noStroke;
-    p5.circle(this.position.x, this.position.y, this.size);
+    p5.circle(this.position.x, this.position.y, this.size.x);
   }
 
   getPosition() {
@@ -54,20 +54,20 @@ export default class Player {
 
   checkOutOfBounds(p5: p5) {
     // Check right side of screen
-    if (this.position.x + this.size / 2 >= p5.width) {
-      this.position.x = p5.width - this.size / 2;
+    if (this.position.x + this.size.x / 2 >= p5.width) {
+      this.position.x = p5.width - this.size.x / 2;
     }
     // Check left side
-    if (this.position.x - this.size / 2 <= 0) {
-      this.position.x = this.size / 2;
+    if (this.position.x - this.size.x / 2 <= 0) {
+      this.position.x = this.size.x / 2;
     }
     // Check top
-    if (this.position.y - this.size / 2 <= 0) {
-      this.position.y = this.size / 2;
+    if (this.position.y - this.size.y / 2 <= 0) {
+      this.position.y = this.size.y / 2;
     }
     // Check bottom
-    if (this.position.y + this.size / 2 >= p5.height) {
-      this.position.y = p5.height - this.size / 2;
+    if (this.position.y + this.size.y / 2 >= p5.height) {
+      this.position.y = p5.height - this.size.y / 2;
     }
   }
 }

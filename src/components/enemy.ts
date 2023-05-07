@@ -5,25 +5,25 @@ import Player from "./player";
 export class Enemy {
   position: p5.Vector;
   speed: p5.Vector;
-  size: number;
+  size: p5.Vector;
   hits: number;
-  sprite: any;
+  sprite: p5.Image;
 
   constructor(
     p5: p5,
     numHits: number,
     speed: p5.Vector,
-    size: number,
-    sprite?: p5.Image
+    size: p5.Vector,
+    sprite: p5.Image
   ) {
     this.size = size;
     this.position = p5.createVector(
-      p5.width + this.size / 2,
-      p5.random(this.size / 2, p5.height - this.size / 2)
+      p5.width + this.size.x * 2,
+      p5.random(this.size.y, p5.height - this.size.y / 2)
     );
     this.speed = speed;
     this.hits = numHits;
-    this.sprite = sprite;
+    this.sprite = this.cloneGif(sprite, 0);
   }
 
   addHits(num: number) {
@@ -49,22 +49,25 @@ export class Enemy {
 
   update() {
     this.position.x -= this.speed.x;
+    console.log(this.sprite);
   }
 
   display(p5: p5) {
-    p5.fill(p5.color(20, 240, 60));
-    p5.noStroke();
-    p5.ellipseMode(p5.CENTER);
-    p5.ellipse(this.position.x, this.position.y, this.size);
+    // p5.fill(p5.color(20, 240, 60));
+    // p5.noStroke();
+    // p5.ellipse(this.position.x, this.position.y, this.size.x, this.size.y);
+    p5.image(this.sprite, this.position.x, this.position.y, 200, 200);
   }
 
   checkBulletCollision(bullet: PlayerBullet) {
     if (
-      this.position.x - this.size / 2 <=
+      this.position.x - this.size.x / 2 <=
         bullet.getPosition().x + bullet.getSize() / 2 &&
-      this.position.y - this.size / 2 <=
+      this.position.x + this.size.x / 2 >=
+        bullet.getPosition().x - bullet.getSize() / 2 &&
+      this.position.y - this.size.y / 2 <=
         bullet.getPosition().y + bullet.getSize() / 2 &&
-      this.position.y + this.size / 2 >=
+      this.position.y + this.size.y / 2 >=
         bullet.getPosition().y - bullet.getSize() / 2
     )
       return true;
@@ -73,15 +76,37 @@ export class Enemy {
 
   checkPlayerCollision(player: Player) {
     if (
-      this.position.x - this.size / 2 <=
-        player.getPosition().x + player.getSize() / 2 &&
-      this.position.y - this.size / 2 <=
-        player.getPosition().y + player.getSize() / 2 &&
-      this.position.y + this.size / 2 >=
-        player.getPosition().y - player.getSize() / 2
+      this.position.x - this.size.x / 2 <=
+        player.getPosition().x + player.getSize().x / 2 &&
+      this.position.x + this.size.x / 2 >=
+        player.getPosition().x - player.getSize().x / 2 &&
+      this.position.y - this.size.y / 2 <=
+        player.getPosition().y + player.getSize().y / 2 &&
+      this.position.y + this.size.y / 2 >=
+        player.getPosition().y - player.getSize().y / 2
     )
       return true;
     return false;
+  }
+
+  cloneGif(gif: p5.Image, startingFrame: number) {
+    let gifClone = gif.get();
+    // @ts-ignore
+    const gp = gif.gifProperties;
+    // @ts-ignore
+    gifClone.gifProperties = {
+      displayIndex: gp.displayIndex,
+      frames: gp.frames,
+      lastChangeTime: gp.lastChangeTime,
+      loopCount: gp.loopCount,
+      loopLimit: gp.loopLimit,
+      numFrames: gp.numFrames,
+      playing: gp.playing,
+      timeDisplayed: gp.timeDisplayed,
+    };
+
+    gifClone.setFrame(startingFrame);
+    return gifClone;
   }
 }
 
@@ -96,7 +121,7 @@ export class Enemy {
 export class Drifter extends Enemy {
   bullets: EnemyBullet[] | undefined;
   constructor(p5: p5, numHits: number, bullets?: EnemyBullet[], sprite?: any) {
-    super(p5, numHits, p5.createVector(1, 0), 50, sprite);
+    super(p5, numHits, p5.createVector(1, 0), p5.createVector(170, 50), sprite);
     this.bullets = bullets;
   }
 
