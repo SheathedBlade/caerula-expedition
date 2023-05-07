@@ -1,5 +1,6 @@
 import p5 from "p5";
-import { EnemyBullet } from "./bullet";
+import { EnemyBullet, PlayerBullet } from "./bullet";
+import Player from "./player";
 
 export class Enemy {
   position: p5.Vector;
@@ -8,7 +9,13 @@ export class Enemy {
   hits: number;
   sprite: any;
 
-  constructor(p5: p5, numHits: number, speed: p5.Vector, size: number) {
+  constructor(
+    p5: p5,
+    numHits: number,
+    speed: p5.Vector,
+    size: number,
+    sprite?: p5.Image
+  ) {
     this.size = size;
     this.position = p5.createVector(
       p5.width + this.size / 2,
@@ -16,15 +23,16 @@ export class Enemy {
     );
     this.speed = speed;
     this.hits = numHits;
-    this.sprite = 0;
+    this.sprite = sprite;
   }
 
   addHits(num: number) {
     this.hits += num;
   }
 
-  takeHit() {
+  takeHit(): number | void {
     this.hits--;
+    console.log("ENEMY: " + this.hits);
   }
 
   getHits() {
@@ -42,6 +50,7 @@ export class Enemy {
   update() {
     this.position.x -= this.speed.x;
   }
+
   display(p5: p5) {
     p5.fill(p5.color(20, 240, 60));
     p5.noStroke();
@@ -49,7 +58,29 @@ export class Enemy {
     p5.ellipse(this.position.x, this.position.y, this.size);
   }
 
-  checkPlayerCollision() {
+  checkBulletCollision(bullet: PlayerBullet) {
+    if (
+      this.position.x - this.size / 2 <=
+        bullet.getPosition().x + bullet.getSize() / 2 &&
+      this.position.y - this.size / 2 <=
+        bullet.getPosition().y + bullet.getSize() / 2 &&
+      this.position.y + this.size / 2 >=
+        bullet.getPosition().y - bullet.getSize() / 2
+    )
+      return true;
+    return false;
+  }
+
+  checkPlayerCollision(player: Player) {
+    if (
+      this.position.x - this.size / 2 <=
+        player.getPosition().x + player.getSize() / 2 &&
+      this.position.y - this.size / 2 <=
+        player.getPosition().y + player.getSize() / 2 &&
+      this.position.y + this.size / 2 >=
+        player.getPosition().y - player.getSize() / 2
+    )
+      return true;
     return false;
   }
 }
@@ -63,9 +94,9 @@ export class Enemy {
 
 // Classic enemy, 5 hits
 export class Drifter extends Enemy {
-  bullets: EnemyBullet[];
-  constructor(p5: p5, numHits: number, bullets: EnemyBullet[]) {
-    super(p5, numHits, p5.createVector(1, 0), 30);
+  bullets: EnemyBullet[] | undefined;
+  constructor(p5: p5, numHits: number, bullets?: EnemyBullet[], sprite?: any) {
+    super(p5, numHits, p5.createVector(1, 0), 50, sprite);
     this.bullets = bullets;
   }
 

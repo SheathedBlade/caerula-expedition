@@ -5,12 +5,14 @@ export default class Player {
   speed: number;
   size: number;
   lives: number;
+  isInvincible: boolean;
 
   constructor(p5: p5, lives: number) {
     this.position = p5.createVector(p5.width / 8, p5.height / 2);
-    this.speed = 8;
+    this.speed = 5;
     this.size = 50;
     this.lives = lives;
+    this.isInvincible = false;
   }
 
   update(p5: p5) {

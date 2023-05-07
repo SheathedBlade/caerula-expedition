@@ -36,21 +36,41 @@ const sketch = (p5: p5) => {
     player.update(p5);
     player.display(p5);
 
-    playerBullets.forEach((bullet) => {
-      if (!bullet.checkOutOfBounds(p5)) {
-        bullet.update();
-        bullet.display(p5);
+    for (let i = playerBullets.length - 1; i >= 0; i--) {
+      if (!playerBullets[i].checkOutOfBounds(p5)) {
+        playerBullets[i].update();
+        playerBullets[i].display(p5);
       } else {
-        playerBullets.splice(playerBullets.indexOf(bullet), 1);
+        playerBullets.splice(i, 1);
       }
-    });
+    }
+
+    // Check bullet collision with enemy
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      for (let j = playerBullets.length - 1; j >= 0; j--) {
+        let hit = enemies[i].checkBulletCollision(playerBullets[j]);
+        if (hit) {
+          playerBullets.splice(j, 1);
+          enemies[i].takeHit();
+          if (enemies[i].getHits() <= 0) {
+            score += 100;
+            enemies.splice(i, 1);
+          }
+          break;
+        }
+      }
+    }
 
     enemies.forEach((enemy) => {
       enemy.update();
       enemy.display(p5);
+
+      if (!player.isInvincible && enemy.checkPlayerCollision(player)) {
+        console.log("I GOT HIT");
+      }
     });
 
-    if (p5.random(0, 100) < 1) enemies.push(new Drifter(p5, 20, []));
+    if (p5.random(0, 100) < 1) enemies.push(new Drifter(p5, 5, []));
 
     // Count up timer
     if (

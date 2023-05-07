@@ -21,6 +21,7 @@ export class Bullet {
   display(p5: p5) {
     p5.fill(p5.color(255));
     p5.noStroke();
+    p5.ellipseMode(p5.CENTER);
     p5.ellipse(this.position.x, this.position.y, this.size);
   }
   getSize(): number {
@@ -36,15 +37,16 @@ export class Bullet {
       return true;
     return false;
   }
-  checkBulletCollision() {}
+
+  getPosition() {
+    return this.position;
+  }
 }
 
 export class PlayerBullet extends Bullet {
   constructor(p5: p5, size: number, player: Player, speed: p5.Vector) {
     super(p5, size, player, speed);
   }
-
-  checkEnemyCollision() {}
 }
 
 export class EnemyBullet extends Bullet {
