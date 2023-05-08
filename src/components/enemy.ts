@@ -9,23 +9,29 @@ export class Enemy {
   hits: number;
   sprite: p5.Image[];
   imgIndex: number;
+  spriteSpeed: number;
+  spriteSize: p5.Vector;
 
   constructor(
     p5: p5,
     numHits: number,
     speed: p5.Vector,
     size: p5.Vector,
-    sprite: p5.Image[]
+    sprite: p5.Image[],
+    spriteSpeed: number,
+    spriteSize: p5.Vector
   ) {
     this.size = size;
     this.position = p5.createVector(
-      p5.width + this.size.x * 2,
+      p5.width + this.size.x,
       p5.random(this.size.y, p5.height - this.size.y / 2)
     );
     this.speed = speed;
     this.hits = numHits;
     this.sprite = sprite;
     this.imgIndex = 0;
+    this.spriteSpeed = spriteSpeed;
+    this.spriteSize = spriteSize;
   }
 
   addHits(num: number) {
@@ -51,12 +57,18 @@ export class Enemy {
 
   update() {
     this.position.x -= this.speed.x;
-    this.imgIndex += 0.6;
+    this.imgIndex += this.spriteSpeed;
   }
 
   display(p5: p5) {
     let index = p5.floor(this.imgIndex) % this.sprite.length;
-    p5.image(this.sprite[index], this.position.x, this.position.y, 200, 200);
+    p5.image(
+      this.sprite[index],
+      this.position.x,
+      this.position.y,
+      this.spriteSize.x,
+      this.spriteSize.y
+    );
   }
 
   checkBulletCollision(bullet: PlayerBullet) {
@@ -88,50 +100,74 @@ export class Enemy {
       return true;
     return false;
   }
-
-  // cloneGif(gif: p5.Image, startingFrame?: number) {
-  //   let gifClone = gif.get();
-  //   // @ts-ignore
-  //   let gp = gif.gifProperties;
-  //   // @ts-ignore
-  //   gifClone.gifProperties = {
-  //     displayIndex: gp.displayIndex,
-  //     frames: gp.frames,
-  //     lastChangeTime: gp.lastChangeTime,
-  //     loopCount: gp.loopCount,
-  //     loopLimit: gp.loopLimit,
-  //     numFrames: gp.numFrames,
-  //     playing: gp.playing,
-  //     timeDisplayed: gp.timeDisplayed,
-  //   };
-
-  //   if (startingFrame) gifClone.setFrame(startingFrame);
-  //   return gifClone;
-  // }
 }
-
-// // Ring of bullets, 15 hits
-// export class Swarmcaller extends Enemy {
-//   constructor(numHits: number) {
-//     super(numHits);
-//   }
-// }
 
 // Classic enemy, 5 hits
 export class Drifter extends Enemy {
   bullets: EnemyBullet[] | undefined;
-  constructor(p5: p5, numHits: number, bullets?: EnemyBullet[], sprite?: any) {
-    super(p5, numHits, p5.createVector(1, 0), p5.createVector(170, 50), sprite);
+  constructor(
+    p5: p5,
+    numHits: number,
+    sprite: p5.Image[],
+    bullets?: EnemyBullet[]
+  ) {
+    super(
+      p5,
+      numHits,
+      p5.createVector(1, 0),
+      p5.createVector(170, 50),
+      sprite,
+      0.6,
+      p5.createVector(200, 200)
+    );
     this.bullets = bullets;
   }
 }
 
-// // Boss, hp sponge
-// export class Stella extends Enemy {
-//   constructor(numHits: number) {
-//     super(numHits);
-//   }
-// }
+// Ring of bullets, 15 hits
+export class Swarmcaller extends Enemy {
+  bullets: EnemyBullet[] | undefined;
+  constructor(
+    p5: p5,
+    numHits: number,
+    sprite: p5.Image[],
+    bullets?: EnemyBullet[]
+  ) {
+    super(
+      p5,
+      numHits,
+      p5.createVector(0.5, 0),
+      p5.createVector(120, 120),
+      sprite,
+      0.8,
+      p5.createVector(120, 120)
+    );
+    this.bullets = bullets;
+  }
+}
+
+// Boss, 100 hits, stationary, occasionally shoots large projectile
+// Buffs all other enemies' hp
+export class Stella extends Enemy {
+  bullets: EnemyBullet[] | undefined;
+  constructor(
+    p5: p5,
+    numHits: number,
+    sprite: p5.Image[],
+    bullets?: EnemyBullet[]
+  ) {
+    super(
+      p5,
+      numHits,
+      p5.createVector(0.5, 0),
+      p5.createVector(300, 300),
+      sprite,
+      0.8,
+      p5.createVector(500, 500)
+    );
+    this.bullets = bullets;
+  }
+}
 
 // // Boss adds, 10 hits
 // export class Descendant extends Enemy {
