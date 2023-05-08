@@ -6,13 +6,15 @@ export default class Player {
   size: p5.Vector;
   lives: number;
   isInvincible: boolean;
+  sprite: p5.Image[];
 
-  constructor(p5: p5, lives: number) {
+  constructor(p5: p5, lives: number, sprite: p5.Image[]) {
     this.position = p5.createVector(p5.width / 8, p5.height / 2);
     this.speed = 5;
     this.size = p5.createVector(50, 50);
     this.lives = lives;
     this.isInvincible = false;
+    this.sprite = sprite;
   }
 
   update(p5: p5) {

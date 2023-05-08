@@ -1,6 +1,12 @@
 import p5 from "p5";
 import { PlayerBullet } from "./components/bullet";
-import { Drifter, Enemy, Stella, Swarmcaller } from "./components/enemy";
+import {
+  Crawler,
+  Drifter,
+  Enemy,
+  Stella,
+  Swarmcaller,
+} from "./components/enemy";
 import Player from "./components/player";
 import Timer from "./components/timer";
 
@@ -11,13 +17,16 @@ const sketch = (p5: p5) => {
   let timer: Timer;
   let enemies: Enemy[];
 
+  // Player sprite
+  let playerSprite: p5.Image[];
+
   // Enemy sprites
   let drifter: p5.Image[] = [];
   // let reaper: p5.Image[] = [];
   let swarmcaller: p5.Image[] = [];
   // let descendant: p5.Image[] = [];
   let stella: p5.Image[] = [];
-  // let crawler: p5.Image[] = [];
+  let crawler: p5.Image[] = [];
 
   p5.preload = () => {
     // Load sprite frames
@@ -29,7 +38,12 @@ const sketch = (p5: p5) => {
     }
 
     for (let i = 1; i <= 64; i++) {
+      playerSprite.push(p5.loadImage("./player-anim/player" + i + ".png"));
       stella.push(p5.loadImage("./stella-anim/stella" + i + ".png"));
+    }
+
+    for (let i = 1; i <= 10; i++) {
+      crawler.push(p5.loadImage("./crawler-anim/crawler" + i + ".png"));
     }
   };
 
@@ -45,7 +59,7 @@ const sketch = (p5: p5) => {
     score = 0;
     timer = new Timer(100);
 
-    player = new Player(p5, 3);
+    player = new Player(p5, 3, playerSprite);
     playerBullets = [];
     enemies = [];
   };
@@ -97,7 +111,14 @@ const sketch = (p5: p5) => {
 
     if (p5.random(0, 500) < 1) {
       enemies.push(new Swarmcaller(p5, 15, swarmcaller, []));
+    }
+
+    if (p5.random(0, 1000) < 1) {
       enemies.push(new Stella(p5, 100, stella, []));
+    }
+
+    if (p5.random(0, 700) < 1) {
+      enemies.push(new Crawler(p5, 20, crawler));
     }
 
     // Count up timer

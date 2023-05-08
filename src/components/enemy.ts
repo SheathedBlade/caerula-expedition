@@ -146,6 +146,22 @@ export class Swarmcaller extends Enemy {
   }
 }
 
+// Explode upon death, 20 hits
+// Have additional bounding circle for AOE dmg
+export class Crawler extends Enemy {
+  constructor(p5: p5, numHits: number, sprite: p5.Image[]) {
+    super(
+      p5,
+      numHits,
+      p5.createVector(0.2, 0),
+      p5.createVector(120, 120),
+      sprite,
+      0.6,
+      p5.createVector(120, 120)
+    );
+  }
+}
+
 // Boss, 100 hits, stationary, occasionally shoots large projectile
 // Buffs all other enemies' hp
 export class Stella extends Enemy {
@@ -179,14 +195,6 @@ export class Stella extends Enemy {
 // // Slow, no bullets, homing onto player, 10 hits
 // // After first hit, dramatically speed up
 // export class Reaper extends Enemy {
-//   constructor(numHits: number) {
-//     super(numHits);
-//   }
-// }
-
-// // Explode upon death, 20 hits
-// // Have additional bounding circle for AOE dmg
-// export class Crawler extends Enemy {
 //   constructor(numHits: number) {
 //     super(numHits);
 //   }
