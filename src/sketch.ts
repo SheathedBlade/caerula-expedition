@@ -38,7 +38,7 @@ const sketch = (p5: p5) => {
     }
 
     for (let i = 1; i <= 64; i++) {
-      playerSprite.push(p5.loadImage("./player-anim/player" + i + ".png"));
+      //playerSprite.push(p5.loadImage("./player-anim/player" + i + ".png"));
       stella.push(p5.loadImage("./stella-anim/stella" + i + ".png"));
     }
 
