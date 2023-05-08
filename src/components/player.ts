@@ -7,25 +7,37 @@ export default class Player {
   lives: number;
   isInvincible: boolean;
   sprite: p5.Image[];
+  imgIndex: number;
+  spriteSpeed: number;
+  spriteSize: p5.Vector;
 
   constructor(p5: p5, lives: number, sprite: p5.Image[]) {
     this.position = p5.createVector(p5.width / 8, p5.height / 2);
     this.speed = 5;
-    this.size = p5.createVector(50, 50);
+    this.size = p5.createVector(100, 60);
     this.lives = lives;
     this.isInvincible = false;
     this.sprite = sprite;
+    this.imgIndex = 0;
+    this.spriteSpeed = 0.8;
+    this.spriteSize = p5.createVector(120, 120);
   }
 
   update(p5: p5) {
     this.checkKeyboardInput(p5);
     this.checkOutOfBounds(p5);
+    this.imgIndex += this.spriteSpeed;
   }
 
   display(p5: p5) {
-    p5.fill(p5.color(125, 26, 29));
-    p5.noStroke;
-    p5.circle(this.position.x, this.position.y, this.size.x);
+    let index = p5.floor(this.imgIndex) % this.sprite.length;
+    p5.image(
+      this.sprite[index],
+      this.position.x,
+      this.position.y - 10,
+      this.spriteSize.x,
+      this.spriteSize.y
+    );
   }
 
   getPosition() {
