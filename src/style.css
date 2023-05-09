@@ -1,12 +1,12 @@
 /* Custom fonts */
 @font-face {
   font-family: "Starsight";
-  src: url("../public/fonts/Starsight.otf");
+  src: url("/fonts/Starsight.otf");
 }
 
 @font-face {
   font-family: "Doomsday-Dragon";
-  src: url("../public/fonts/doomsdaysdragons.otf");
+  src: url("/fonts/doomsdaysdragons.otf");
 }
 
 /* Custom variables */
@@ -39,6 +39,10 @@ body {
   letter-spacing: 5px;
   font-weight: 400;
   margin-bottom: 1rem;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 #intro > p {
@@ -49,6 +53,10 @@ body {
   letter-spacing: 2px;
   padding-left: 10px;
   padding-right: 10px;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 #intro > hr {

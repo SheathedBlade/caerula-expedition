@@ -164,6 +164,7 @@ export class Crawler extends Enemy {
 
 // Boss, 100 hits, stationary, occasionally shoots large projectile
 // Buffs all other enemies' hp
+// Spawns descendants while alive
 export class Stella extends Enemy {
   bullets: EnemyBullet[] | undefined;
   constructor(
@@ -185,12 +186,20 @@ export class Stella extends Enemy {
   }
 }
 
-// // Boss adds, 10 hits
-// export class Descendant extends Enemy {
-//   constructor(numHits: number) {
-//     super(numHits);
-//   }
-// }
+// Boss adds, 3 hits, just there to block enemies, gives low amount of points
+export class Descendant extends Enemy {
+  constructor(p5: p5, numHits: number, sprite: p5.Image[]) {
+    super(
+      p5,
+      numHits,
+      p5.createVector(0.9, 0),
+      p5.createVector(80, 80),
+      sprite,
+      0.8,
+      p5.createVector(80, 80)
+    );
+  }
+}
 
 // // Slow, no bullets, homing onto player, 10 hits
 // // After first hit, dramatically speed up

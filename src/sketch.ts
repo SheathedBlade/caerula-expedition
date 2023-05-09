@@ -2,6 +2,7 @@ import p5 from "p5";
 import { PlayerBullet } from "./components/bullet";
 import {
   Crawler,
+  Descendant,
   Drifter,
   Enemy,
   Stella,
@@ -24,7 +25,7 @@ const sketch = (p5: p5) => {
   let drifter: p5.Image[] = [];
   // let reaper: p5.Image[] = [];
   let swarmcaller: p5.Image[] = [];
-  // let descendant: p5.Image[] = [];
+  let descendant: p5.Image[] = [];
   let stella: p5.Image[] = [];
   let crawler: p5.Image[] = [];
 
@@ -39,6 +40,9 @@ const sketch = (p5: p5) => {
 
     for (let i = 1; i <= 42; i++) {
       playerSprite.push(p5.loadImage("./player-anim/player" + i + ".png"));
+      descendant.push(
+        p5.loadImage("./descendant-anim/descendant" + i + ".png")
+      );
     }
 
     for (let i = 1; i <= 64; i++) {
@@ -110,6 +114,7 @@ const sketch = (p5: p5) => {
 
     if (p5.random(0, 100) < 1) {
       enemies.push(new Drifter(p5, 5, drifter, []));
+      enemies.push(new Descendant(p5, 3, descendant));
     }
 
     if (p5.random(0, 500) < 1) {
