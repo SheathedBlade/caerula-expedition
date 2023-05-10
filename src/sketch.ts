@@ -11,6 +11,7 @@ import {
 } from "./components/enemy";
 import Player from "./components/player";
 import Timer from "./components/timer";
+
 const sketch = (p5: p5) => {
   let player: Player;
   let score: number;
