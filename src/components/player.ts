@@ -10,6 +10,9 @@ export default class Player {
   imgIndex: number;
   spriteSpeed: number;
   spriteSize: p5.Vector;
+  rapidFire: boolean;
+  spreadShot: boolean;
+  giantBullet: boolean;
 
   constructor(p5: p5, lives: number, sprite: p5.Image[]) {
     this.position = p5.createVector(p5.width / 8, p5.height / 2);
@@ -21,6 +24,9 @@ export default class Player {
     this.imgIndex = 0;
     this.spriteSpeed = 0.8;
     this.spriteSize = p5.createVector(120, 120);
+    this.rapidFire = false;
+    this.spreadShot = false;
+    this.giantBullet = false;
   }
 
   update(p5: p5) {
@@ -31,6 +37,23 @@ export default class Player {
 
   display(p5: p5) {
     let index = p5.floor(this.imgIndex) % this.sprite.length;
+    if (this.isInvincible) {
+      p5.fill(p5.color(45, 45, 45, 255));
+      p5.ellipse(
+        this.position.x,
+        this.position.y - 10,
+        this.spriteSize.x + 10,
+        this.spriteSize.y - 10
+      );
+      p5.fill(p5.color(221, 56, 176, 200));
+      p5.ellipse(
+        this.position.x,
+        this.position.y - 10,
+        this.spriteSize.x,
+        this.spriteSize.y - 20
+      );
+    }
+
     p5.image(
       this.sprite[index],
       this.position.x,
@@ -46,6 +69,20 @@ export default class Player {
 
   getSize() {
     return this.size;
+  }
+
+  getLives() {
+    return this.lives;
+  }
+
+  loseLife() {
+    this.lives--;
+  }
+
+  setRapidFire(toggle: boolean) {
+    this.rapidFire = toggle;
+    this.spreadShot = false;
+    this.giantBullet = false;
   }
 
   checkKeyboardInput(p5: p5) {
@@ -76,8 +113,8 @@ export default class Player {
       this.position.x = this.size.x / 2;
     }
     // Check top
-    if (this.position.y - this.size.y / 2 <= 0) {
-      this.position.y = this.size.y / 2;
+    if (this.position.y - this.size.y / 2 <= 50) {
+      this.position.y = this.size.y / 2 + 50;
     }
     // Check bottom
     if (this.position.y + this.size.y / 2 >= p5.height) {

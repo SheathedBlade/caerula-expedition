@@ -24,7 +24,7 @@ export class Enemy {
     this.size = size;
     this.position = p5.createVector(
       p5.width + this.size.x,
-      p5.random(this.size.y, p5.height - this.size.y / 2)
+      p5.random(this.size.y + 25, p5.height - this.size.y / 2)
     );
     this.speed = speed;
     this.hits = numHits;
@@ -137,7 +137,7 @@ export class Swarmcaller extends Enemy {
       p5,
       numHits,
       p5.createVector(0.5, 0),
-      p5.createVector(120, 120),
+      p5.createVector(100, 120),
       sprite,
       0.8,
       p5.createVector(120, 120)
@@ -154,7 +154,7 @@ export class Crawler extends Enemy {
       p5,
       numHits,
       p5.createVector(0.2, 0),
-      p5.createVector(120, 120),
+      p5.createVector(100, 100),
       sprite,
       0.6,
       p5.createVector(120, 120)
@@ -193,7 +193,7 @@ export class Descendant extends Enemy {
       p5,
       numHits,
       p5.createVector(0.9, 0),
-      p5.createVector(80, 80),
+      p5.createVector(60, 60),
       sprite,
       0.8,
       p5.createVector(80, 80)

@@ -1,4 +1,5 @@
 import p5 from "p5";
+import "p5/lib/addons/p5.sound";
 import { PlayerBullet } from "./components/bullet";
 import {
   Crawler,
@@ -10,13 +11,26 @@ import {
 } from "./components/enemy";
 import Player from "./components/player";
 import Timer from "./components/timer";
-
 const sketch = (p5: p5) => {
   let player: Player;
   let score: number;
   let playerBullets: PlayerBullet[];
-  let timer: Timer;
   let enemies: Enemy[];
+
+  // Timers
+  let invincibleTimer: Timer;
+  let powerUpTimer: Timer;
+
+  // Sounds
+  let bgm: p5.SoundFile;
+
+  // Fonts
+  let starsight: p5.Font;
+
+  // Background image
+  let bgImage: p5.Image[] = [];
+  let bgIndex: number = 0;
+  let bgSpeed: number = 0.8;
 
   // Player sprite
   let playerSprite: p5.Image[] = [];
@@ -30,6 +44,18 @@ const sketch = (p5: p5) => {
   let crawler: p5.Image[] = [];
 
   p5.preload = () => {
+    // Load sounds
+    p5.soundFormats("mp3");
+    bgm = p5.loadSound("./sounds/caerula.mp3");
+
+    // Load fonts
+    starsight = p5.loadFont("./fonts/Starsight.otf");
+
+    // Load bgImage
+    for (let i = 1; i <= 228; i++) {
+      bgImage.push(p5.loadImage("./background-anim/background" + i + ".png"));
+    }
+
     // Load sprite frames
     for (let i = 1; i <= 31; i++) {
       drifter.push(p5.loadImage("./drifter-anim/drifter" + i + ".png"));
@@ -62,17 +88,32 @@ const sketch = (p5: p5) => {
     p5.noCursor();
     canvas.parent("#app");
     p5.ellipseMode(p5.CENTER);
+    p5.rectMode(p5.CENTER);
     p5.imageMode(p5.CENTER);
     score = 0;
-    timer = new Timer(100);
+
+    invincibleTimer = new Timer(3);
+
+    p5.textFont(starsight);
 
     player = new Player(p5, 3, playerSprite);
     playerBullets = [];
     enemies = [];
+    bgm.setVolume(0.4);
+    if (!bgm.isPlaying()) bgm.play();
   };
 
   p5.draw = () => {
-    p5.background(p5.color(18, 58, 112));
+    // Show background gif
+    bgIndex += bgSpeed;
+    let _bgIndex = p5.floor(bgIndex) % bgImage.length;
+    p5.image(
+      bgImage[_bgIndex],
+      p5.width / 2,
+      p5.height / 2,
+      (bgImage[_bgIndex].width * p5.height) / bgImage[_bgIndex].height,
+      p5.height
+    );
 
     // Update game entities
     player.update(p5);
@@ -108,7 +149,8 @@ const sketch = (p5: p5) => {
       enemy.display(p5);
 
       if (!player.isInvincible && enemy.checkPlayerCollision(player)) {
-        console.log("I GOT HIT");
+        player.isInvincible = true;
+        player.loseLife();
       }
     });
 
@@ -129,28 +171,51 @@ const sketch = (p5: p5) => {
       enemies.push(new Crawler(p5, 20, crawler));
     }
 
-    // Count up timer
+    // invincible timer
+    if (p5.frameCount % 60 === 0 && player.isInvincible) {
+      invincibleTimer.countUp();
+    }
+
+    // Check if invincible timer runs out
     if (
-      p5.frameCount % 60 === 0 &&
-      timer.getCurrentTime() < timer.getMaxTime()
+      player.isInvincible &&
+      invincibleTimer.getCurrentTime() >= invincibleTimer.getMaxTime()
     ) {
-      timer.countUp();
+      player.isInvincible = false;
+      invincibleTimer.setCurrentTime(0);
     }
 
     // Score draw
-    p5.textSize(20);
-    p5.fill(p5.color(255));
-    p5.text("Score: " + score, 20, 30);
+    p5.fill(p5.color(0, 80));
+    p5.noStroke();
+    p5.rect(p5.width / 2, 25, p5.width, 50);
 
-    p5.text("TIME: " + timer.getCurrentTime(), 20, 60);
+    p5.textSize(40);
+    p5.fill(p5.color(255));
+    p5.textAlign(p5.RIGHT);
+    p5.text("SCORE: " + score, p5.width - 15, 40);
+    p5.text("TIME: " + invincibleTimer.getCurrentTime(), p5.width - 15, 80);
+
+    p5.textAlign(p5.LEFT);
+    p5.text("LIVES: " + player.getLives(), 15, 40);
   };
 
   p5.keyPressed = () => {
     // Space is pressed, spawn player bullet
     if (p5.keyCode == 32) {
-      playerBullets.push(
-        new PlayerBullet(p5, 10, player, p5.createVector(10, 0))
-      );
+      // If powered up by rapid fire
+      if (player.rapidFire) {
+        playerBullets.push(
+          new PlayerBullet(p5, 10, player, p5.createVector(20, 0))
+        );
+        playerBullets.push(
+          new PlayerBullet(p5, 10, player, p5.createVector(17, 0))
+        );
+      } else {
+        playerBullets.push(
+          new PlayerBullet(p5, 10, player, p5.createVector(10, 0))
+        );
+      }
     }
   };
 };

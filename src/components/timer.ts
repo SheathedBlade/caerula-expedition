@@ -14,4 +14,11 @@ export default class Timer {
   getMaxTime() {
     return this.maxTime;
   }
+
+  setCurrentTime(newTime: number) {
+    this.currTime = newTime;
+  }
+  setMaxTime(newTime: number) {
+    this.maxTime = newTime;
+  }
 }
