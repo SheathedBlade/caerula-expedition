@@ -19,7 +19,7 @@ const sketch = (p5: p5) => {
 
   // Timers
   let invincibleTimer: Timer;
-  let powerUpTimer: Timer;
+  // let powerUpTimer: Timer;
 
   // Sounds
   let bgm: p5.SoundFile;
