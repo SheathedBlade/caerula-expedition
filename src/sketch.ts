@@ -1,5 +1,4 @@
 import p5 from "p5";
-import "p5/lib/addons/p5.sound";
 import { PlayerBullet } from "./components/bullet";
 import {
   Crawler,
@@ -23,7 +22,7 @@ const sketch = (p5: p5) => {
   // let powerUpTimer: Timer;
 
   // Sounds
-  let bgm: p5.SoundFile;
+  let bgm: any;
 
   // Fonts
   let starsight: p5.Font;
@@ -46,6 +45,7 @@ const sketch = (p5: p5) => {
 
   p5.preload = () => {
     // Load sounds
+    p5.soundFormats("mp3");
     bgm = p5.loadSound("./sounds/caerula.mp3");
 
     // Load fonts
