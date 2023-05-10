@@ -6,4 +6,5 @@ declare global {
     errorCallback?: (...args: any[]) => any,
     whileLoading?: (...args: any[]) => any
   ): p5.SoundFile;
+  declare function soundFormats(formats?: string): void;
 }
