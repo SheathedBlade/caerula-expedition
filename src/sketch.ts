@@ -1,5 +1,5 @@
 import p5 from "p5";
-import "p5/lib/addons/p5.sound";
+// import "p5/lib/addons/p5.sound";
 import { PlayerBullet } from "./components/bullet";
 import {
   Crawler,
@@ -12,7 +12,7 @@ import {
 import Player from "./components/player";
 import Timer from "./components/timer";
 
-const sketch = (p5: p5) => {
+const sketch = (p5: any) => {
   let player: Player;
   let score: number;
   let playerBullets: PlayerBullet[];
@@ -26,23 +26,23 @@ const sketch = (p5: p5) => {
   let bgm: any;
 
   // Fonts
-  let starsight: p5.Font;
+  let starsight: any;
 
   // Background image
-  let bgImage: p5.Image[] = [];
+  let bgImage: any[] = [];
   let bgIndex: number = 0;
   let bgSpeed: number = 0.8;
 
   // Player sprite
-  let playerSprite: p5.Image[] = [];
+  let playerSprite: any[] = [];
 
   // Enemy sprites
-  let drifter: p5.Image[] = [];
+  let drifter: any[] = [];
   // let reaper: p5.Image[] = [];
-  let swarmcaller: p5.Image[] = [];
-  let descendant: p5.Image[] = [];
-  let stella: p5.Image[] = [];
-  let crawler: p5.Image[] = [];
+  let swarmcaller: any[] = [];
+  let descendant: any[] = [];
+  let stella: any[] = [];
+  let crawler: any[] = [];
 
   p5.preload = () => {
     // Load sounds
