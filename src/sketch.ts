@@ -46,7 +46,6 @@ const sketch = (p5: p5) => {
 
   p5.preload = () => {
     // Load sounds
-    p5.soundFormats("mp3");
     bgm = p5.loadSound("./sounds/caerula.mp3");
 
     // Load fonts
