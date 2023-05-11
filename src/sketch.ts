@@ -166,8 +166,8 @@ const sketch = (p5: p5) => {
     p5.textFont(starsight);
     p5.fill(p5.color(255));
     p5.textSize(50);
-
-    p5.cursor;
+    //@ts-ignore
+    p5.cursor();
     p5.text("BUY", p5.width / 2, p5.height / 2);
 
     if (!gameComplete) {
@@ -297,6 +297,7 @@ const sketch = (p5: p5) => {
 
   function showEnd() {
     gameComplete = true;
+    // @ts-ignore
     p5.cursor();
     p5.background(p5.color(0, 10, 20));
     if (bgm.isPlaying()) bgm.stop();
