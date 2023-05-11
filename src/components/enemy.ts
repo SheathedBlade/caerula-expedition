@@ -38,9 +38,8 @@ export class Enemy {
     this.hits += num;
   }
 
-  takeHit(): number | void {
+  takeHit(): void {
     this.hits--;
-    console.log("ENEMY: " + this.hits);
   }
 
   getHits() {
@@ -55,7 +54,7 @@ export class Enemy {
     return this.size;
   }
 
-  update() {
+  update(p5: p5) {
     this.position.x -= this.speed.x;
     this.imgIndex += this.spriteSpeed;
   }
@@ -98,6 +97,14 @@ export class Enemy {
         player.getPosition().y - player.getSize().y / 2
     )
       return true;
+    return false;
+  }
+
+  checkOutOfBounds() {
+    // Check left side
+    if (this.position.x + this.size.x / 2 <= 0) {
+      return true;
+    }
     return false;
   }
 }
@@ -183,6 +190,14 @@ export class Stella extends Enemy {
       p5.createVector(500, 500)
     );
     this.bullets = bullets;
+  }
+
+  override update(p5: p5) {
+    if (this.position.x >= p5.width - p5.width / 5) {
+      this.position.x -= this.speed.x;
+    }
+    this.imgIndex += this.spriteSpeed;
+    this.position.y = p5.height / 2;
   }
 }
 

@@ -2,21 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/crawler.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="src/style.css" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"
-      integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"
-      integrity="sha512-WzkwpdWEMAY/W8WvP9KS2/VI6zkgejR4/KTxTl4qHx0utqeyVE0JY+S1DlMuxDChC7x0oXtk/ESji6a0lP/Tdg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <script type=”text/javascript” src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.min.js"></script>
+    <script type=”text/javascript” src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.sound.min.js"></script>
     <title>Caerula Expedition</title>
   </head>
   <body>
@@ -35,8 +25,31 @@
           </p>
           <hr />
         </div>
+        <div id="hiddenForm">
+          <p>Complete a run of the game to record your score.</p>
+        </div>
+        <div id="form">
+          <p id="score">Your final score is:</p>
+          <form>
+            <label for="playerName">Enter your name here:</label>
+            <input type="text" id="playerName" name="playerName" size="10"/>
+            <button id="submit" type="submit" value="Submit">SUBMIT</button>
+          </form>
+        </div>
+        <hr />
         <div id="leaderboard">
           <h1>Top 5 Scores</h1>
+          <hr />
+          <table id="rankings" class="leaderboard-results" width="100%">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </div>
       <div id="p5_loading" class="loadingclass">

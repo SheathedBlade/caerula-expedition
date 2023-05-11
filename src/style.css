@@ -59,7 +59,7 @@ body {
   user-select: none; /* Standard syntax */
 }
 
-#intro > hr {
+hr {
   border: 2px solid var(--text-white);
 }
 
@@ -141,4 +141,100 @@ a:hover {
   100% {
     transform: rotate(360deg);
   }
+}
+
+#form {
+  margin: 0rem 2rem 2rem 2rem;
+  height: 20%;
+  display: none;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#form input[type="text"] {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border: none;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  font-size: large;
+  background-color: #747474;
+  color: var(--text-white);
+  letter-spacing: 1px;
+}
+
+#form label {
+  font-family: "Starsight";
+  color: var(--text-white);
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#score {
+  text-align: center;
+  font-family: "Starsight";
+  color: var(--text-white);
+  letter-spacing: 3px;
+  font-weight: 600;
+  font-size: large;
+}
+
+#leaderboard thead th {
+  font-family: "Starsight";
+  color: var(--text-white);
+  letter-spacing: 1px;
+}
+
+.leaderboard-results {
+  text-align: left;
+  border-collapse: collapse;
+  padding-left: 20px;
+}
+
+#hiddenForm p {
+  font-family: "Starsight";
+  letter-spacing: 2px;
+  color: var(--text-white);
+  text-align: center;
+  font-weight: 600;
+  font-size: large;
+}
+
+#hiddenForm {
+  margin: 2rem;
+  height: 15%;
+  display: flex;
+  align-items: center;
+}
+
+.leaderboard-results thead th {
+  padding: 10px 10px 10px 20px;
+  color: #747474;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#submit {
+  background-color: #57538b;
+  border: none;
+  color: white;
+  font-family: "Starsight";
+  padding: 0.5rem;
+  transition: 0.5s;
+  font-size: large;
+  letter-spacing: 2px;
+  font-weight: bolder;
+}
+
+#submit:hover {
+  background-color: #746cdc;
+  transition: 0.5s;
 }
