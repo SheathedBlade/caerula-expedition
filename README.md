@@ -4,6 +4,8 @@
 
 This is a small game based off of the popular mobile game "Arknights". That being said, all assets present in the game, such as the name and/or sprites used belong to Hypergryph.
 
+You can go to the game here: <https://caerula-expedition-production.up.railway.app/>
+
 ## How does it work?
 
 This is a side-scrolling shooter where there is a set time limit. Under this time limit, you have to get as many points as possible before the time runs out (or if you die instead).
@@ -30,3 +32,4 @@ Prisma and PostgreSQL - PostgreSQL is the database of choice. It's used to house
 - Finish connection between frontend and backend for database querying and leaderboard updating.
 - Add sound effects to everything
 - Add in unique enemy AI
+- Figure out domain issues with Railway (app hosting)
