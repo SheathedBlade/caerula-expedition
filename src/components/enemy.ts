@@ -53,7 +53,7 @@ export class Enemy {
   getSize() {
     return this.size;
   }
-
+  //@ts-ignore
   update(p5: p5) {
     this.position.x -= this.speed.x;
     this.imgIndex += this.spriteSpeed;
