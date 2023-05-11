@@ -21,4 +21,12 @@ p5.js - the main JavaScript library used to create the game
 
 Vite - Code building tool that is very fast and highly recommended to any web developer
 
+Express - Backend tool for querying Prisma
+
 Prisma and PostgreSQL - PostgreSQL is the database of choice. It's used to house data on the leaderboard of the game. Prisma is used to bridge the connection between the application and the database
+
+## Checklist of Things to Add
+
+- Finish connection between frontend and backend for database querying and leaderboard updating.
+- Add sound effects to everything
+- Add in unique enemy AI
