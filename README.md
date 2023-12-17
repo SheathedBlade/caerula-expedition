@@ -4,7 +4,7 @@
 
 This is a small game based off of the popular mobile game "Arknights". That being said, all assets present in the game, such as the name and/or sprites used belong to Hypergryph.
 
-You can go to the game here: <https://caerula-expedition-production.up.railway.app/>
+You can go to the game here: <https://caerula.arczenpulse.dev/>
 
 ## How does it work?
 
